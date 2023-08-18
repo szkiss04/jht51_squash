@@ -26,20 +26,20 @@ DROP TABLE IF EXISTS `matches`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `matches` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `player1_id` int NOT NULL,
-  `player2_id` int NOT NULL,
+  `player1_email` varchar(256) NOT NULL,
+  `player2_email` varchar(256) NOT NULL,
   `place_id` int NOT NULL,
-  `score_p1` int DEFAULT NULL,
-  `score_p2` int DEFAULT NULL,
+  `score_p1` int NOT NULL,
+  `score_p2` int NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `player1_fk_idx` (`player1_id`),
-  KEY `player2_fk_idx` (`player2_id`),
+  KEY `player1_email_fk_idx` (`player1_email`),
+  KEY `player2_email_fk_idx` (`player2_email`),
   KEY `place_fk_idx` (`place_id`),
   CONSTRAINT `place_fk` FOREIGN KEY (`place_id`) REFERENCES `squash_places` (`id`),
-  CONSTRAINT `player1_fk` FOREIGN KEY (`player1_id`) REFERENCES `players` (`id`),
-  CONSTRAINT `player2_fk` FOREIGN KEY (`player2_id`) REFERENCES `players` (`id`),
-  CONSTRAINT `players_not_the_same` CHECK ((`player1_id` <> `player2_id`))
+  CONSTRAINT `player1_email_fk` FOREIGN KEY (`player1_email`) REFERENCES `players` (`email`),
+  CONSTRAINT `player2_email_fk` FOREIGN KEY (`player2_email`) REFERENCES `players` (`email`),
+  CONSTRAINT `players_not_the_same` CHECK ((`player1_email` <> `player2_email`))
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -49,7 +49,7 @@ CREATE TABLE `matches` (
 
 LOCK TABLES `matches` WRITE;
 /*!40000 ALTER TABLE `matches` DISABLE KEYS */;
-INSERT INTO `matches` VALUES (1,25,231,98,13,12,'2023-03-02'),(2,25,13,24,25,0,'2023-07-23'),(3,13,231,11,14,14,'2023-05-12');
+INSERT INTO `matches` VALUES (1,'david.remetei@gmail.com','jozzy123@freemail.hu',98,13,12,'2023-03-02'),(2,'david.remetei@gmail.com','zsoltszilardkiss04@gmail.com',24,25,0,'2023-07-23'),(3,'zsoltszilardkiss04@gmail.com','jozzy123@freemail.hu',11,14,14,'2023-05-12');
 /*!40000 ALTER TABLE `matches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,18 +61,16 @@ DROP TABLE IF EXISTS `players`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `players` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   `role_id` int NOT NULL,
   `activated` tinyint NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`email`),
   UNIQUE KEY `username_UNIQUE` (`username`),
-  UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `roleid_fk_idx` (`role_id`),
   CONSTRAINT `roleid_fk` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +79,7 @@ CREATE TABLE `players` (
 
 LOCK TABLES `players` WRITE;
 /*!40000 ALTER TABLE `players` DISABLE KEYS */;
-INSERT INTO `players` VALUES (1,'admin','admin@admin.com','admin',1,1),(13,'DemoSzilárd','zsoltszilardkiss04@gmail.com','jelszo123',2,1),(25,'DemoDávid','david.remetei@gmail.com','somegeneratedpassword',2,1),(112,'DemoBéla','belakiraly@gmail.com','jelszo456',2,0),(231,'DemoJózsef','jozzy123@freemail.hu','jozzypass',2,1);
+INSERT INTO `players` VALUES ('admin','admin@admin.com','admin',1,1),('DemoDávid','david.remetei@gmail.com','somegeneratedpassword',2,1),('DemoJózsef','jozzy123@freemail.hu','jozzypass',2,1),('DemoSzilárd','zsoltszilardkiss04@gmail.com','jelszo123',2,1);
 /*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-17 19:48:28
+-- Dump completed on 2023-08-18 19:47:43
