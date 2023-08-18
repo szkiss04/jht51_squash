@@ -79,7 +79,7 @@ CREATE TABLE `players` (
 
 LOCK TABLES `players` WRITE;
 /*!40000 ALTER TABLE `players` DISABLE KEYS */;
-INSERT INTO `players` VALUES ('admin','admin@admin.com','admin',1,1),('DemoDávid','david.remetei@gmail.com','somegeneratedpassword',2,1),('DemoJózsef','jozzy123@freemail.hu','jozzypass',2,1),('DemoSzilárd','zsoltszilardkiss04@gmail.com','jelszo123',2,1);
+INSERT INTO `players` VALUES ('admin','admin@admin.com','$2a$12$XKLRKqpXXCKmlDeHfrlqmOshWnHSXMjNbQD9siTxkMKOsIzRglV6O',1,1),('DemoDávid','david.remetei@gmail.com','$2a$12$Oz7N17XzsmSgcYGrj4KjRO4KPi9Ez4eD.DxjAVyVU/tO/3MCnHSC6',2,1),('DemoJózsef','jozzy123@freemail.hu','$2a$12$TUFhnczJxvKwtcGIelXk.uHBITR5xq403vtS9S/c5twfhvQm0UtD.',2,1),('DemoSzilárd','zsoltszilardkiss04@gmail.com','$2a$12$6sHCG4wsY7W25IQenu9bZebDTg1OFkvNTddYz42X7gQWMio0wwtNq',2,1);
 /*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-18 19:47:43
+-- Dump completed on 2023-08-18 21:06:46
