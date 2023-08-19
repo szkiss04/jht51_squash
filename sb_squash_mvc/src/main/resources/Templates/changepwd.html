@@ -11,6 +11,7 @@
 		<p>No worries, it is easy-peasy!</p>
 		
 		<form action="/player/changepwd" method="POST">
+			<input type="hidden" name="playerEmail" value="${player.email}" />
 			<div>
 				<label>
 					Old password:
