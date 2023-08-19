@@ -1,5 +1,6 @@
 package pti.sb_squash_mvc.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import pti.sb_squash_mvc.config.HibernateUtility;
+import pti.sb_squash_mvc.model.Match;
+import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
 
 @Repository
@@ -104,6 +107,114 @@ public class Database {
 	}
 	
 	
+	public List<Place> getAllPlaces() {
+		
+		Session session = hbUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		Query<Place> q = session.createQuery("SELECT p FROM Place p", Place.class);
+		List<Place> places = q.getResultList();
+		
+		tx.commit();
+		session.close();
+		
+		return places;
+	}
+	
+	
+	public void addPlace(Place place) {
+		
+		Session session = hbUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(place);
+		
+		tx.commit();
+		session.close();
+	}
+	
+	
+	private List<Match> getMatches(String queryFilter, int filterId) {
+		
+		List<Match> allMatches = new ArrayList<>();
+		String SQLString = "SELECT id, player1_email, player2_email, place_id FROM matches";
+		
+		if(queryFilter != null) {
+			SQLString += " WHERE " + queryFilter;
+		}
+		
+		if(filterId != 0) {
+			SQLString += " = ?1";
+		}
+		
+		Session session = hbUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		NativeQuery<Object[]> foreignKeysQuery = session.createNativeQuery(SQLString, Object[].class);
+		
+		if(filterId != 0) {	
+			foreignKeysQuery.setParameter(1, filterId);
+		}
+		
+		List<Object[]> tableIds = foreignKeysQuery.getResultList();
+		
+		for(int i = 0; i < tableIds.size(); i++) {
+			
+			int matchId = Integer.parseInt(tableIds.get(i)[0].toString());
+			
+			Match match = session.get(Match.class, matchId);
+			
+			Player player1 = session.get(Player.class, tableIds.get(i)[1].toString());
+			match.setPlayer1(player1);
+			
+			Player player2 = session.get(Player.class, tableIds.get(i)[2].toString());
+			match.setPlayer2(player2);
+			
+			Place place = session.get(Place.class, Integer.parseInt(tableIds.get(i)[3].toString()));
+			match.setPlace(place);
+			
+			allMatches.add(match);
+		}
+		
+		tx.commit();
+		session.close();
+		
+		return allMatches;
+	}
+	
+	
+	public List<Match> getAllMatches() {
+		
+		List<Match> allMatches = this.getMatches(null, 0);
+		
+		return allMatches;
+	}
+	
+	public List<Match> getAllMatchesByUserEmail(String playerEmail) {
+		
+		List<Match> allMatches = this.getMatches("player1_email = " + playerEmail + " OR player2_email = " + playerEmail, 0);
+		
+		return allMatches;
+	}
+	
+	public List<Match> getAllMatchesByPlaceId(int placeId) {
+		
+		List<Match> allMatches = this.getMatches("place_id", placeId);
+		
+		return allMatches;
+	}
+	
+	
+	public void addMatch(Match match) {
+		
+		Session session = hbUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(match);
+		
+		tx.commit();
+		session.close();
+	}
 	
 	
 }
