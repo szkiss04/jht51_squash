@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Squash app - index</title>
+	</head>
+	<body>
+		<a th:if="${userLoggedIn}" href="/logout"></a>
+		
+		<h1>Index</h1>
+		<h2>All matches</h2>
+		
+		<h2>Filter by player's' name</h2>
+			
+		<!-- Here we lie to the user, because we actually search by the user's email -->
+		<form action="/filter/player" method="GET">
+			<select name="playerEmail">
+				<option th:each="player : ${playersList}"
+						th:value="${player.email}"
+						th:text="${player.playerName}"></option>
+			</select>
+			<button type="submit">Filter</button>
+		</form>
+		
+		<h2>Filter by squash court's name</h2>
+		
+		<!-- Here we lie again. -->
+		<form action="/filter/place" method="GET">
+			<select name="placeId">
+				<option th:each="place : ${placesList}"
+						th:value="${place.id}"
+						th:text="${place.name}"></option>
+			</select>
+			<button type="submit">Filter</button>
+		</form>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>1st player's name</th>
+					<th>2nd player's name</th>
+					<th>Squash court's name</th>
+					<th>Squash court's address</th>
+					<th>1st player's score</th>
+					<th>2nd player's score</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="match : ${matchesList}">
+					<td th:text="${match.date}"></td>
+					<td th:text="${match.player1.playerName}"></td>
+					<td th:text="${match.player2.playerName}"></td>
+					<td th:text="${match.place.name}"></td>
+					<td th:text="${match.place.address}"></td>
+					<td th:text="${match.player1Score}"></td>
+					<td th:text="${match.player2Score}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
