@@ -25,7 +25,7 @@ public class Match {
 	private Player player2;
 	
 	@Transient
-	private SquashPlace place;
+	private Place place;
 	
 	@Column(name = "score_p1")
 	private int player1Score;
@@ -60,11 +60,11 @@ public class Match {
 		this.player2 = player2;
 	}
 
-	public SquashPlace getPlace() {
+	public Place getPlace() {
 		return place;
 	}
 
-	public void setPlace(SquashPlace place) {
+	public void setPlace(Place place) {
 		this.place = place;
 	}
 
