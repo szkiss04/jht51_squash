@@ -26,8 +26,26 @@ public class AppController {
 		this.service = service;
 	}
 	
+	@GetMapping("/")
+	public String showAllMatches(
+				Authentication userLoggedIn,
+				Model model
+			) {
+		
+		List<Player> playersList = service.getAllPlayers();
+		List<Place> placesList = service.getAllPlaces();
+		List<Match> matchesList = service.getAllMatchesDateDescending();
+		
+		model.addAttribute(userLoggedIn);
+		model.addAttribute(playersList);
+		model.addAttribute(placesList);
+		model.addAttribute(matchesList);
+		
+		return "index";
+	}
+	
 	@GetMapping("/filter/player")
-	public String showFilteredResultsByPlayer(
+	public String showFilteredMatchesByPlayer(
 				@RequestParam(name = "playerEmail") String playerEmail,
 				Authentication userLoggedIn,
 				Model model

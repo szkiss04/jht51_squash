@@ -10,7 +10,9 @@ import pti.sb_squash_mvc.model.Player;
 
 @Service
 public class AppService {
-
+	
+	// These methods are up for debate, they are nowhere near finalized!
+	
 	public List<Player> getAllPlayers() {
 		
 		/*
@@ -38,6 +40,17 @@ public class AppService {
 		/*
 		 * List<Match> filteredMatches = database.getAllMatchesFilteredByUserEmailDateDesc();
 		 * return filteredMatches;
+		 * 
+		 */
+		
+		return null;
+	}
+
+	public List<Match> getAllMatchesDateDescending() {
+		
+		/*
+		 * List<Match> allMatches = database.getAllMatchesDateDesc();
+		 * return allMatches;
 		 * 
 		 */
 		
