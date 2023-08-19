@@ -10,6 +10,7 @@
 		<mapping class="pti.sb_squash_mvc.model.Match" />
 		<mapping class="pti.sb_squash_mvc.model.Player" />
 		<mapping class="pti.sb_squash_mvc.model.Place" />
-	
+
+
 	</session-factory>
 </hibernate-configuration>
