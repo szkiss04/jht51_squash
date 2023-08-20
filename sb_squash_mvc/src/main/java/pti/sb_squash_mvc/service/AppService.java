@@ -2,8 +2,10 @@ package pti.sb_squash_mvc.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pti.sb_squash_mvc.dao.Database;
 import pti.sb_squash_mvc.model.Match;
 import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
@@ -11,50 +13,42 @@ import pti.sb_squash_mvc.model.Player;
 @Service
 public class AppService {
 	
+	private final Database db;
+	
+	@Autowired
+	public AppService(Database db) {
+		
+		this.db = db;
+	}
+	
 	// These methods are up for debate, they are nowhere near finalized!
 	
 	public List<Player> getAllPlayers() {
 		
-		/*
-		 * List<Player> playersList = database.getAllPlayers();
-		 * return playersList;
-		 * 
-		 */
+		List<Player> playersList = db.getAllUsers();
 		
-		return null;
+		return playersList;
 	}
 
 	public List<Place> getAllPlaces() {
 		
-		/*
-		 * List<Place> placesList = database.getAllPlaces();
-		 * return placesList;
-		 * 
-		 */
+		List<Place> placesList = db.getAllPlaces();
 		
-		return null;
+		return placesList;
 	}
 
-	public List<Match> getAllMatchesByPlayerEmailDateDescending() {
+	public List<Match> getAllMatchesByPlayerEmail(String email) {
 		
-		/*
-		 * List<Match> filteredMatches = database.getAllMatchesFilteredByUserEmailDateDesc();
-		 * return filteredMatches;
-		 * 
-		 */
+		List<Match> filteredMatches = db.getAllMatchesByUserEmail(email);
 		
-		return null;
+		return filteredMatches;
 	}
 
-	public List<Match> getAllMatchesDateDescending() {
+	public List<Match> getAllMatches() {
 		
-		/*
-		 * List<Match> allMatches = database.getAllMatchesDateDesc();
-		 * return allMatches;
-		 * 
-		 */
+		List<Match> allMatches = db.getAllMatches();
 		
-		return null;
+		return allMatches;
 	}
 
 }

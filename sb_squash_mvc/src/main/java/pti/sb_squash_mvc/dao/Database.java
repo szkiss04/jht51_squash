@@ -192,7 +192,7 @@ public class Database {
 	
 	public List<Match> getAllMatchesByUserEmail(String playerEmail) {
 		
-		List<Match> allMatches = this.getMatches("player1_email = " + playerEmail + " OR player2_email = " + playerEmail, 0);
+		List<Match> allMatches = this.getMatches("player1_email = '" + playerEmail + "' OR player2_email = '" + playerEmail + "'", 0);
 		
 		return allMatches;
 	}

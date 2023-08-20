@@ -16,7 +16,7 @@ public class SpringSecurityConfiguration {
     	http
 		.authorizeHttpRequests((requests) -> requests
 			.requestMatchers("/").permitAll()
-			.requestMatchers("/filter/**", "/player/changepwd").hasAnyAuthority("ADMIN", "USER")
+			.requestMatchers("/filter/**", "/player/changepwd").hasAnyAuthority("ADMIN", "PLAYER")
 			.requestMatchers("/admin/**", "/admin").hasAuthority("ADMIN")
 			.anyRequest().authenticated()
 		)

@@ -3,8 +3,6 @@ package pti.sb_squash_mvc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,18 +26,16 @@ public class AppController {
 	
 	@GetMapping("/")
 	public String showAllMatches(
-				Authentication userLoggedIn,
 				Model model
 			) {
 		
 		List<Player> playersList = service.getAllPlayers();
 		List<Place> placesList = service.getAllPlaces();
-		List<Match> matchesList = service.getAllMatchesDateDescending();
+		List<Match> matchesList = service.getAllMatches();
 		
-		model.addAttribute(userLoggedIn);
-		model.addAttribute(playersList);
-		model.addAttribute(placesList);
-		model.addAttribute(matchesList);
+		model.addAttribute("playersList", playersList);
+		model.addAttribute("placesList", placesList);
+		model.addAttribute("matchesList", matchesList);
 		
 		return "index";
 	}
@@ -47,18 +43,16 @@ public class AppController {
 	@GetMapping("/filter/player")
 	public String showFilteredMatchesByPlayer(
 				@RequestParam(name = "playerEmail") String playerEmail,
-				Authentication userLoggedIn,
 				Model model
 			) {
 		
 		List<Player> playersList = service.getAllPlayers();
 		List<Place> placesList = service.getAllPlaces();
-		List<Match> matchesList = service.getAllMatchesByPlayerEmailDateDescending();
+		List<Match> matchesList = service.getAllMatchesByPlayerEmail(playerEmail);
 		
-		model.addAttribute(userLoggedIn);
-		model.addAttribute(playersList);
-		model.addAttribute(placesList);
-		model.addAttribute(matchesList);
+		model.addAttribute("playersList", playersList);
+		model.addAttribute("placesList", placesList);
+		model.addAttribute("matchesList", matchesList);
 		
 		return "index";
 	}
