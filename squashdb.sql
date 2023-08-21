@@ -119,7 +119,8 @@ CREATE TABLE `squash_places` (
   `place_name` varchar(256) NOT NULL,
   `address` varchar(256) NOT NULL,
   `rent_fee_per_hour_huf` int NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `place_name_UNIQUE` (`place_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
