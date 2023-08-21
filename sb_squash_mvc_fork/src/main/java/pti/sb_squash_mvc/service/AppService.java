@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pti.sb_squash_mvc.dao.Database;
@@ -12,16 +13,19 @@ import pti.sb_squash_mvc.dto.MatchDto;
 import pti.sb_squash_mvc.model.Match;
 import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
+import pti.sb_squash_mvc.util.PasswordGenerator;
 
 @Service
 public class AppService {
 	
 	private final Database db;
+	private final PasswordEncoder pwEncoder;
 	
 	@Autowired
-	public AppService(Database db) {
+	public AppService(Database db, PasswordEncoder pwEncoder) {
 		
 		this.db = db;
+		this.pwEncoder = pwEncoder;
 	}
 	
 	// These methods are up for debate, they are nowhere near finalized!
@@ -71,18 +75,19 @@ public class AppService {
 		playerToRegister.setPlayerName(username);
 		playerToRegister.setActivated(false);
 		
-		PasswordGeneratorService rndPwService = new PasswordGeneratorService();
-		String randomPassword = rndPwService.generatePassword();
+		String randomPassword = PasswordGenerator.generate();
 		System.out.println(">>> New password generated for " + email + " account: " + randomPassword + " <<<");
 		// Email sending service should be implemented and called here.
 		
-		playerToRegister.setPassword( new BCryptPasswordEncoder(12).encode(randomPassword) );
+		playerToRegister.setPassword( pwEncoder.encode(randomPassword) );
 		
 		
 		try {
 			
 			db.addUser(playerToRegister, roleId);
 			updateResult = "Account '" + playerToRegister.getEmail() + "' registered successfully.";
+			
+			
 		}
 		catch(ConstraintViolationException e) {
 			

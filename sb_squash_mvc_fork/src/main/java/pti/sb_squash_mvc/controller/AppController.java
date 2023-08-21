@@ -34,12 +34,8 @@ public class AppController {
 				Model model
 			) {
 		
-		List<Player> playersList = service.getAllPlayers();
-		List<Place> placesList = service.getAllPlaces();
 		List<Match> matchesList = service.getAllMatches();
 		
-		model.addAttribute("playersList", playersList);
-		model.addAttribute("placesList", placesList);
 		model.addAttribute("matchesList", matchesList);
 		
 		return "index";
@@ -51,12 +47,8 @@ public class AppController {
 				Model model
 			) {
 		
-		List<Player> playersList = service.getAllPlayers();
-		List<Place> placesList = service.getAllPlaces();
 		List<Match> matchesList = service.getAllMatchesByPlayerEmail(playerEmail);
 		
-		model.addAttribute("playersList", playersList);
-		model.addAttribute("placesList", placesList);
 		model.addAttribute("matchesList", matchesList);
 		
 		model.addAttribute("filter_playerEmail", playerEmail);
@@ -68,10 +60,7 @@ public class AppController {
 	public String showFilteredMatchesByPlace(
 			Model model,
 			@RequestParam(name="placeId") int placeId) {
-		
-		
-		model.addAttribute("playersList", service.getAllPlayers());
-		model.addAttribute("placesList", service.getAllPlaces());
+				
 		model.addAttribute("matchesList", service.getAllMatchesFilteredByPlaceId(placeId));
 		
 		model.addAttribute("filter_placeId", placeId);
@@ -83,12 +72,6 @@ public class AppController {
 	@GetMapping("/admin")
 	public String showAdminPage(Model model) {
 		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		
-		model.addAttribute("loggedinuser", currentPrincipalName);
-		model.addAttribute("playersList", service.getAllPlayers());
-		model.addAttribute("placesList", service.getAllPlaces());
 		model.addAttribute("matchdto", new MatchDto());
 		
 		return "admin.html";
@@ -107,10 +90,6 @@ public class AppController {
 		
 		model.addAttribute("message", dbUpdateResult);
 		
-		model.addAttribute("loggedinuser", SecurityContextHolder.getContext().getAuthentication().getName());
-		model.addAttribute("playersList", service.getAllPlayers());
-		model.addAttribute("placesList", service.getAllPlaces());
-		
 		return "admin.html";
 	}
 	
@@ -127,9 +106,6 @@ public class AppController {
 		
 		model.addAttribute("message", dbUpdateResult);
 		
-		model.addAttribute("loggedinuser", SecurityContextHolder.getContext().getAuthentication().getName());
-		model.addAttribute("playersList", service.getAllPlayers());
-		model.addAttribute("placesList", service.getAllPlaces());
 		
 		return "admin.html";
 	}
@@ -142,8 +118,6 @@ public class AppController {
 		
 		service.registerMatch(matchdto);
 		
-		model.addAttribute("playersList", service.getAllPlayers());
-		model.addAttribute("placesList", service.getAllPlaces());
 		model.addAttribute("matchdto", new MatchDto());
 		
 		return "admin";

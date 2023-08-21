@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -15,8 +17,6 @@ public class SpringSecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	http
 		.authorizeHttpRequests((requests) -> requests
-			.requestMatchers("/").permitAll()
-			.requestMatchers("/filter/**", "/player/changepwd").hasAnyAuthority("ADMIN", "PLAYER")
 			.requestMatchers("/admin/**", "/admin").hasAuthority("ADMIN")
 			.anyRequest().authenticated()
 		)
@@ -35,5 +35,11 @@ public class SpringSecurityConfiguration {
     	
     	return http.build();
     }
+	
+	@Bean
+	public PasswordEncoder bcryptPasswordEncoder() {
+		
+		return new BCryptPasswordEncoder(12);
+	}
 	
 }
