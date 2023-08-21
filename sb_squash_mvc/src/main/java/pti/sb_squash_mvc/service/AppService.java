@@ -81,7 +81,7 @@ public class AppService {
 		try {
 			
 			db.addUser(playerToRegister, roleId);
-			updateResult = "Account registered successfully.";
+			updateResult = "Account '" + playerToRegister.getEmail() + "' registered successfully.";
 		}
 		catch(ConstraintViolationException e) {
 			
@@ -107,7 +107,7 @@ public class AppService {
 		try {
 			
 			db.addPlace(placeToRegister);
-			updateResult = "Place registered successfully.";
+			updateResult = "Place '" + placeToRegister.getPlaceName() + "' registered successfully.";
 		}
 		catch(ConstraintViolationException e) {
 			

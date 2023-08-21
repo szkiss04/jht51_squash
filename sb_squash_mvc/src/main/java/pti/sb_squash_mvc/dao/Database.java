@@ -89,7 +89,9 @@ public class Database {
 		Session session = hbUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		
-		MutationQuery q = session.createNativeMutationQuery("INSERT INTO players (email, username, password, activated, role_id) VALUES (?1, ?2, ?3, ?4, ?5)");
+		MutationQuery q = session.createNativeMutationQuery(
+				"INSERT INTO players (email, username, password, activated, role_id) "
+				+ "VALUES (?1, ?2, ?3, ?4, ?5)");
 		q.setParameter(1, player.getEmail());
 		q.setParameter(2, player.getPlayerName());
 		q.setParameter(3, player.getPassword());
@@ -215,12 +217,22 @@ public class Database {
 	}
 	
 	
-	public void addMatch(Match match) {
+	public void addMatch(Match match, int placeId, String player1_email, String player2_email) {
 		
 		Session session = hbUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		
-		session.persist(match);
+		MutationQuery q = session.createNativeMutationQuery(
+				"INSERT INTO matches (player1_email, player2_email, place_id, score_p1, score_p2, date)"
+				+ "VALUES (?1, ?2, ?3, ?4, ?5, ?6)");
+		q.setParameter(1, player1_email);
+		q.setParameter(2, player2_email);
+		q.setParameter(3, placeId);
+		q.setParameter(4, match.getPlayer1Score());
+		q.setParameter(5, match.getPlayer2Score());
+		q.setParameter(6, match.getDate());
+		
+		q.executeUpdate();
 		
 		tx.commit();
 		session.close();

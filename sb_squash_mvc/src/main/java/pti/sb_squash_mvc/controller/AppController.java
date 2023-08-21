@@ -75,11 +75,16 @@ public class AppController {
 		return "index.html";
 	}
 	
+	
 	@GetMapping("/admin")
-	public String showAdminPage() {
+	public String showAdminPage(Model model) {
+		
+		model.addAttribute("playersList", service.getAllPlayers());
+		model.addAttribute("placesList", service.getAllPlaces());
 		
 		return "admin.html";
 	}
+	
 	
 	@PostMapping("/admin/reg/player")
 	public String registerNewPlayer(
@@ -93,8 +98,12 @@ public class AppController {
 		
 		model.addAttribute("message", dbUpdateResult);
 		
+		model.addAttribute("playersList", service.getAllPlayers());
+		model.addAttribute("placesList", service.getAllPlaces());
+		
 		return "admin.html";
 	}
+	
 	
 	@PostMapping("/admin/reg/place")
 	public String registerNewPlace(
@@ -107,6 +116,9 @@ public class AppController {
 		String dbUpdateResult = service.addNewPlace(newPlaceName, newPlaceAddress, newPlaceRentFee);
 		
 		model.addAttribute("message", dbUpdateResult);
+		
+		model.addAttribute("playersList", service.getAllPlayers());
+		model.addAttribute("placesList", service.getAllPlaces());
 		
 		return "admin.html";
 	}

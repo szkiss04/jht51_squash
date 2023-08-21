@@ -31,13 +31,51 @@
 	<form action="/admin/reg/place" method="post">
 			<label for="newplacename">Name:</label>
 		<input type="text" id="newplacename" name="newpname" required />
+
 					<label for="newplaceaddress">Address:</label>
 		<input type="text" id="newplaceaddress" name="newpaddress" required />
+
 					<label for="newplacerentfee">Rent fee per hour (HUF):</label>
 		<input type="number" id="newplacerentfee" name="newpfee" required />
+
 		<br/>		
 		<input type="submit" value="Register"></input>
 	</form>
 	
+	<hr style="width:40%;text-align:left;margin-left:0"/>
+	
+	<p>Add a new match</p>
+	<form action="/admin/reg/match" method="post">
+			<label for="matchdate">Date:</label>
+		<input type="date" id="matchdate" name="date" required/>
+		
+			<label for="matchplace">Place:</label>
+		<select name="placeid" id="matchplace">
+			<option th:each="place : ${placesList}" th:text="${place.placeName} + ' (' + ${place.address} + ')'" th:value="${place.id}"></option>
+		</select>
+		<br/>	
+		
+			<label for="player1">Player 1:</label>
+		<select name="player1_email" id="player1">
+			<option th:each="player : ${playersList}" th:text="${player.playerName}" th:value="${player.email}"></option>
+		</select>
+			
+			<label for="p1score">P1 Score:</label>
+		<input type="number" id="p1score" name="player1_score" required/>
+		<br/>	
+		
+			<label for="player2">Player 2:</label>
+		<select name="player2_email" id="player2">
+			<option th:each="player : ${playersList}" th:text="${player.playerName}" th:value="${player.email}"></option>
+		</select>
+		
+			<label for="p2score">P2 Score:</label>
+		<input type="number" id="p2score" name="player2_score" required/>
+		
+		<br/>		
+		<input type="submit" value="Add Match"></input>
+	</form>
+	
+	<a href="/"><button>Return to Main</button></a>
 </body>
 </html>
