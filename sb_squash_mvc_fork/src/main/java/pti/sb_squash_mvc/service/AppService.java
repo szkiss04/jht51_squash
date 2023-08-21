@@ -28,8 +28,6 @@ public class AppService {
 		this.pwEncoder = pwEncoder;
 	}
 	
-	// These methods are up for debate, they are nowhere near finalized!
-	
 	public List<Player> getAllPlayers() {
 		
 		List<Player> playersList = db.getAllUsers();
@@ -65,7 +63,6 @@ public class AppService {
 		return matches;
 	}
 	
-	
 	public String addNewPlayer(String email, String username, int roleId) {
 		
 		String updateResult = null;
@@ -77,17 +74,14 @@ public class AppService {
 		
 		String randomPassword = PasswordGenerator.generate();
 		System.out.println(">>> New password generated for " + email + " account: " + randomPassword + " <<<");
-		// Email sending service should be implemented and called here.
 		
 		playerToRegister.setPassword( pwEncoder.encode(randomPassword) );
-		
 		
 		try {
 			
 			db.addUser(playerToRegister, roleId);
 			updateResult = "Account '" + playerToRegister.getEmail() + "' registered successfully.";
-			
-			
+			// Email sending here
 		}
 		catch(ConstraintViolationException e) {
 			
@@ -98,7 +92,6 @@ public class AppService {
 		return updateResult;
 	}
 
-	
 	public String addNewPlace(String newPlaceName, String newPlaceAddress, int newPlaceRentFee) {
 
 		String updateResult = null;
@@ -108,7 +101,6 @@ public class AppService {
 		placeToRegister.setPlaceName(newPlaceName);
 		placeToRegister.setAddress(newPlaceAddress);
 		placeToRegister.setRentFeePerHourInHuf(newPlaceRentFee);
-		
 		
 		try {
 			
@@ -126,12 +118,7 @@ public class AppService {
 
 	public void registerMatch(MatchDto matchDto) {
 		
-		Match newMatch = new Match();
-		newMatch.setPlayer1Score(matchDto.getPlayer1Score());
-		newMatch.setPlayer2Score(matchDto.getPlayer2Score());
-		newMatch.setDate(matchDto.getDate());
-		
-		db.addMatch(newMatch, matchDto.getPlaceId(), matchDto.getPlayer1Email(), matchDto.getPlayer2Email());
+		db.addMatch(matchDto);
 	}
 
 }

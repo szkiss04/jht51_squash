@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import pti.sb_squash_mvc.config.HibernateUtility;
+import pti.sb_squash_mvc.dto.MatchDto;
 import pti.sb_squash_mvc.model.Match;
 import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
@@ -217,7 +218,7 @@ public class Database {
 	}
 	
 	
-	public void addMatch(Match match, int placeId, String player1_email, String player2_email) {
+	public void addMatch(MatchDto matchDto) {
 		
 		Session session = hbUtil.getSession();
 		Transaction tx = session.beginTransaction();
@@ -225,12 +226,12 @@ public class Database {
 		MutationQuery q = session.createNativeMutationQuery(
 				"INSERT INTO matches (player1_email, player2_email, place_id, score_p1, score_p2, date)"
 				+ "VALUES (?1, ?2, ?3, ?4, ?5, ?6)");
-		q.setParameter(1, player1_email);
-		q.setParameter(2, player2_email);
-		q.setParameter(3, placeId);
-		q.setParameter(4, match.getPlayer1Score());
-		q.setParameter(5, match.getPlayer2Score());
-		q.setParameter(6, match.getDate());
+		q.setParameter(1, matchDto.getPlayer1Email());
+		q.setParameter(2, matchDto.getPlayer2Email());
+		q.setParameter(3, matchDto.getPlaceId());
+		q.setParameter(4, matchDto.getPlayer1Score());
+		q.setParameter(5, matchDto.getPlayer2Score());
+		q.setParameter(6, matchDto.getDate());
 		
 		q.executeUpdate();
 		
