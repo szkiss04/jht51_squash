@@ -5,12 +5,14 @@
 		<title>Squash app - index</title>
 	</head>
 	<body>
+		<h2>Index</h2>
 		
 		<div>
-			<a href="/logout">Logout</a>
+			<a href="/logout"><button>Logout</button></a>
+			<a th:if="${loggedInUser.getRole().equals('ADMIN')}" href="/admin">
+				<button>Go to the administration page</button>
+			</a>
 		</div>
-		
-		<h2>Index</h2>
 		
 		<hr style="width:40%;text-align:left;margin-left:0"/>
 		
