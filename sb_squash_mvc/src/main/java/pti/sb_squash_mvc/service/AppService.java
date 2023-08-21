@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pti.sb_squash_mvc.dao.Database;
+import pti.sb_squash_mvc.dto.MatchDto;
 import pti.sb_squash_mvc.model.Match;
 import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
@@ -116,6 +117,16 @@ public class AppService {
 		
 		
 		return updateResult;
+	}
+
+	public void registerMatch(MatchDto matchDto) {
+		
+		Match newMatch = new Match();
+		newMatch.setPlayer1Score(matchDto.getPlayer1Score());
+		newMatch.setPlayer2Score(matchDto.getPlayer2Score());
+		newMatch.setDate(matchDto.getDate());
+		
+		db.addMatch(newMatch, matchDto.getPlaceId(), matchDto.getPlayer1Email(), matchDto.getPlayer2Email());
 	}
 
 }

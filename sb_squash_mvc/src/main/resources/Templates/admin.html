@@ -45,32 +45,32 @@
 	<hr style="width:40%;text-align:left;margin-left:0"/>
 	
 	<p>Add a new match</p>
-	<form action="/admin/reg/match" method="post">
+	<form action="/admin/reg/match" method="post" th:object="${matchdto}">
 			<label for="matchdate">Date:</label>
-		<input type="date" id="matchdate" name="date" required/>
+		<input type="date" id="matchdate" name="date" required th:field="*{date}"/>
 		
 			<label for="matchplace">Place:</label>
-		<select name="placeid" id="matchplace">
+		<select name="placeid" id="matchplace" th:field="*{placeId}">
 			<option th:each="place : ${placesList}" th:text="${place.placeName} + ' (' + ${place.address} + ')'" th:value="${place.id}"></option>
 		</select>
 		<br/>	
 		
 			<label for="player1">Player 1:</label>
-		<select name="player1_email" id="player1">
+		<select name="player1_email" id="player1" th:field="*{player1Email}">
 			<option th:each="player : ${playersList}" th:text="${player.playerName}" th:value="${player.email}"></option>
 		</select>
 			
 			<label for="p1score">P1 Score:</label>
-		<input type="number" id="p1score" name="player1_score" required/>
+		<input type="number" id="p1score" name="player1_score" required th:field="*{player1Score}"/>
 		<br/>	
 		
 			<label for="player2">Player 2:</label>
-		<select name="player2_email" id="player2">
+		<select name="player2_email" id="player2" th:field="*{player2Email}">
 			<option th:each="player : ${playersList}" th:text="${player.playerName}" th:value="${player.email}"></option>
 		</select>
 		
 			<label for="p2score">P2 Score:</label>
-		<input type="number" id="p2score" name="player2_score" required/>
+		<input type="number" id="p2score" name="player2_score" required th:field="*{player2Score}"/>
 		
 		<br/>		
 		<input type="submit" value="Add Match"></input>

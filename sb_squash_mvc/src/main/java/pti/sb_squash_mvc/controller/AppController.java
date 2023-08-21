@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pti.sb_squash_mvc.dto.MatchDto;
 import pti.sb_squash_mvc.model.Match;
 import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
@@ -81,6 +83,7 @@ public class AppController {
 		
 		model.addAttribute("playersList", service.getAllPlayers());
 		model.addAttribute("placesList", service.getAllPlaces());
+		model.addAttribute("matchdto", new MatchDto());
 		
 		return "admin.html";
 	}
@@ -123,8 +126,19 @@ public class AppController {
 		return "admin.html";
 	}
 	
-	
-	
-	
+	@PostMapping("/admin/reg/match")
+	public String registerNewMatch(
+				@ModelAttribute MatchDto matchdto,
+				Model model
+			) {
+		
+		service.registerMatch(matchdto);
+		
+		model.addAttribute("playersList", service.getAllPlayers());
+		model.addAttribute("placesList", service.getAllPlaces());
+		model.addAttribute("matchdto", new MatchDto());
+		
+		return "admin";
+	}
 	
 }
