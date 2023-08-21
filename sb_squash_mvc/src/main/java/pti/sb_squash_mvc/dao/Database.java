@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.MutationQuery;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,12 +84,19 @@ public class Database {
 	}
 	
 	
-	public void addUser(Player player) {
+	public void addUser(Player player, int roleId) {
 		
 		Session session = hbUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		
-		session.persist(player);
+		MutationQuery q = session.createNativeMutationQuery("INSERT INTO players (email, username, password, activated, role_id) VALUES (?1, ?2, ?3, ?4, ?5)");
+		q.setParameter(1, player.getEmail());
+		q.setParameter(2, player.getPlayerName());
+		q.setParameter(3, player.getPassword());
+		q.setParameter(4, player.isActivated());
+		q.setParameter(5, roleId);
+		
+		q.executeUpdate();
 		
 		tx.commit();
 		session.close();

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Squash app - admin page</title>
+</head>
+<body>
+	<h2>Admin</h2>
+	
+	<hr style="width:40%;text-align:left;margin-left:0"/>
+	
+	<p>Register a new player</p>
+	<form action="/admin/reg/player" method="post">
+			<label for="newplayer">Email address:</label>
+		<input type="email" id="newplayeremail" name="newemail" required />
+			<label for="newplayername">Player name:</label>
+		<input type="text" id="newplayername" name="newname" required />
+		<select name="newrole">			
+			<option value="1">Admin</option>
+			<option value="2" selected>Player</option>
+		</select>
+		<br/>
+		<input type="submit" value="Register"></input>
+	</form>
+	
+	<hr style="width:40%;text-align:left;margin-left:0"/>
+	
+	<p th:text="${message}"></p>
+</body>
+</html>
