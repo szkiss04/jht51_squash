@@ -22,6 +22,7 @@ public class SpringSecurityConfiguration {
 		)
 		.formLogin((form) -> form
 			.permitAll()
+			.successHandler(new AuthSuccessHandler())
 		)
 		.logout((logout) -> logout
 			.permitAll()
