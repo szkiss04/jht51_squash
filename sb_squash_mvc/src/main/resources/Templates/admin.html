@@ -5,8 +5,11 @@
 <title>Squash app - admin page</title>
 </head>
 <body>
-	<h2>Admin</h2>
+	<h2 th:text="'Admin: ' + ${loggedinuser}"></h2>
+	<a href="/logout"><button>Log out</button></a>
+	
 	<p th:text="${message}"></p>
+	
 	<hr style="width:40%;text-align:left;margin-left:0"/>
 	
 	<p>Register a new player</p>

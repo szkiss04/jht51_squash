@@ -3,6 +3,8 @@ package pti.sb_squash_mvc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,6 +83,10 @@ public class AppController {
 	@GetMapping("/admin")
 	public String showAdminPage(Model model) {
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		model.addAttribute("loggedinuser", currentPrincipalName);
 		model.addAttribute("playersList", service.getAllPlayers());
 		model.addAttribute("placesList", service.getAllPlaces());
 		model.addAttribute("matchdto", new MatchDto());
@@ -101,6 +107,7 @@ public class AppController {
 		
 		model.addAttribute("message", dbUpdateResult);
 		
+		model.addAttribute("loggedinuser", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("playersList", service.getAllPlayers());
 		model.addAttribute("placesList", service.getAllPlaces());
 		
@@ -120,6 +127,7 @@ public class AppController {
 		
 		model.addAttribute("message", dbUpdateResult);
 		
+		model.addAttribute("loggedinuser", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("playersList", service.getAllPlayers());
 		model.addAttribute("placesList", service.getAllPlaces());
 		
