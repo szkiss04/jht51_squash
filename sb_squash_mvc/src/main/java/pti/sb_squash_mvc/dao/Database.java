@@ -147,6 +147,8 @@ public class Database {
 			SQLString += " = ?1";
 		}
 		
+		SQLString += " ORDER BY date DESC";
+		
 		Session session = hbUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		

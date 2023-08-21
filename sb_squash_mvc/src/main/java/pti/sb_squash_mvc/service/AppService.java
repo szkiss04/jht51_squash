@@ -50,5 +50,12 @@ public class AppService {
 		
 		return allMatches;
 	}
+	
+	public List<Match> getAllMatchesFilteredByPlaceId(int placeId) {
+		
+		List<Match> matches = db.getAllMatchesByPlaceId(placeId);
+		
+		return matches;
+	}
 
 }

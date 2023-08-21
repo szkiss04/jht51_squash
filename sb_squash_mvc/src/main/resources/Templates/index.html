@@ -12,6 +12,8 @@
 		
 		<h2>Index</h2>
 		
+		<hr style="width:40%;text-align:left;margin-left:0"/>
+		
 		<h3>Filter by player's' name</h3>
 			
 		<!-- Here we lie to the user, because we actually search by the user's email -->
@@ -19,22 +21,31 @@
 			<select name="playerEmail">
 				<option th:each="player : ${playersList}"
 						th:value="${player.email}"
-						th:text="${player.playerName}"></option>
+						th:text="${player.playerName}"
+						th:selected="${player.email.equals(filter_playerEmail)}"></option>
 			</select>
 			<button type="submit">Filter</button>
 		</form>
 		
-		<h2>Filter by squash court's name</h2>
+		<h3>Filter by squash court's name</h3>
 		
 		<!-- Here we lie again. -->
 		<form action="/filter/place" method="GET">
 			<select name="placeId">
 				<option th:each="place : ${placesList}"
 						th:value="${place.id}"
-						th:text="${place.placeName}"></option>
+						th:text="${place.placeName}"
+						th:selected="${place.id == filter_placeId}"></option>
 			</select>
 			<button type="submit">Filter</button>
 		</form>
+		
+		<br/>
+		<a href="/">
+			<button>Clear All Filters</button>
+		</a>
+		
+		<hr style="width:40%;text-align:left;margin-left:0"/>
 		
 		<div th:if="${!matchesList.isEmpty()}">
 			<h3>Matches</h3>

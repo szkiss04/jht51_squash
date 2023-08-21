@@ -54,7 +54,24 @@ public class AppController {
 		model.addAttribute("placesList", placesList);
 		model.addAttribute("matchesList", matchesList);
 		
+		model.addAttribute("filter_playerEmail", playerEmail);
+		
 		return "index";
+	}
+	
+	@GetMapping("/filter/place")
+	public String showFilteredMatchesByPlace(
+			Model model,
+			@RequestParam(name="placeId") int placeId) {
+		
+		
+		model.addAttribute("playersList", service.getAllPlayers());
+		model.addAttribute("placesList", service.getAllPlaces());
+		model.addAttribute("matchesList", service.getAllMatchesFilteredByPlaceId(placeId));
+		
+		model.addAttribute("filter_placeId", placeId);
+		
+		return "index.html";
 	}
 	
 }
