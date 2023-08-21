@@ -96,6 +96,22 @@ public class AppController {
 		return "admin.html";
 	}
 	
+	@PostMapping("/admin/reg/place")
+	public String registerNewPlace(
+			Model model,
+			@RequestParam(name="newpname") String newPlaceName,
+			@RequestParam(name="newpaddress") String newPlaceAddress,
+			@RequestParam(name="newpfee") int newPlaceRentFee) {
+		
+		
+		String dbUpdateResult = service.addNewPlace(newPlaceName, newPlaceAddress, newPlaceRentFee);
+		
+		model.addAttribute("message", dbUpdateResult);
+		
+		return "admin.html";
+	}
+	
+	
 	
 	
 	

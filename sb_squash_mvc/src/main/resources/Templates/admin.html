@@ -6,25 +6,38 @@
 </head>
 <body>
 	<h2>Admin</h2>
-	
+	<p th:text="${message}"></p>
 	<hr style="width:40%;text-align:left;margin-left:0"/>
 	
 	<p>Register a new player</p>
 	<form action="/admin/reg/player" method="post">
 			<label for="newplayer">Email address:</label>
 		<input type="email" id="newplayeremail" name="newemail" required />
+		
 			<label for="newplayername">Player name:</label>
 		<input type="text" id="newplayername" name="newname" required />
+		
 		<select name="newrole">			
 			<option value="1">Admin</option>
 			<option value="2" selected>Player</option>
 		</select>
-		<br/>
+		<br/>	
 		<input type="submit" value="Register"></input>
 	</form>
 	
 	<hr style="width:40%;text-align:left;margin-left:0"/>
 	
-	<p th:text="${message}"></p>
+	<p>Register a new place</p>
+	<form action="/admin/reg/place" method="post">
+			<label for="newplacename">Name:</label>
+		<input type="text" id="newplacename" name="newpname" required />
+					<label for="newplaceaddress">Address:</label>
+		<input type="text" id="newplaceaddress" name="newpaddress" required />
+					<label for="newplacerentfee">Rent fee per hour (HUF):</label>
+		<input type="number" id="newplacerentfee" name="newpfee" required />
+		<br/>		
+		<input type="submit" value="Register"></input>
+	</form>
+	
 </body>
 </html>

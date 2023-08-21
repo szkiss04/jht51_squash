@@ -60,6 +60,7 @@ public class AppService {
 		return matches;
 	}
 	
+	
 	public String addNewPlayer(String email, String username, int roleId) {
 		
 		String updateResult = null;
@@ -87,6 +88,32 @@ public class AppService {
 			updateResult = "Account registration failed: " + e.getErrorMessage();
 		}
 
+		
+		return updateResult;
+	}
+
+	
+	public String addNewPlace(String newPlaceName, String newPlaceAddress, int newPlaceRentFee) {
+
+		String updateResult = null;
+		
+		Place placeToRegister = new Place();
+		placeToRegister.setId(0);
+		placeToRegister.setPlaceName(newPlaceName);
+		placeToRegister.setAddress(newPlaceAddress);
+		placeToRegister.setRentFeePerHourInHuf(newPlaceRentFee);
+		
+		
+		try {
+			
+			db.addPlace(placeToRegister);
+			updateResult = "Place registered successfully.";
+		}
+		catch(ConstraintViolationException e) {
+			
+			updateResult = "Place registration failed: " + e.getErrorMessage();
+		}
+		
 		
 		return updateResult;
 	}
